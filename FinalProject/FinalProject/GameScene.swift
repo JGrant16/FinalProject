@@ -7,83 +7,179 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 class GameScene: SKScene {
     
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    var rocket : SKSpriteNode!
+    var backGround : SKSpriteNode!
+    var objectImages : [String] = ["asteroid", "AlienShip"]
+    var gameOver : SKLabelNode!
+    var timer : Timer!
+    var scoreLabel : SKLabelNode!
+    var difficulty = 1.5
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "\(score)"
+        }
+    }
     
     override func didMove(to view: SKView) {
-        
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
-        
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
-        
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
+       setScene()
     }
     
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
+    func setScene() {
+        physicsWorld.gravity = CGVector(dx: 0.0, dy: -1.0)
+        physicsWorld.contactDelegate = self
+        
+        scoreLabel = SKLabelNode(text: "0")
+        scoreLabel.zPosition = ZPositions.label
+        scoreLabel.position = CGPoint(x: 20, y: frame.size.height - 60)
+        scoreLabel.fontSize = 40
+        scoreLabel.fontColor = UIColor.yellow
+        scoreLabel.fontName = "ChalkboardSE-Bold"
+        addChild(scoreLabel)
+        
+        backGround = SKSpriteNode(imageNamed: "Harris-Space-wallpaper")
+        backGround.size = CGSize(width: frame.size.width, height: frame.size.height)
+        backGround.position = CGPoint(x: frame.midX, y: frame.midY)
+        backGround.zPosition = ZPositions.backGround
+        addChild(backGround)
+        
+        rocket = SKSpriteNode(imageNamed: "Spaceship-PNG-File")
+        rocket.size = CGSize(width: frame.size.width/7, height: frame.size.height/7)
+        rocket.position = CGPoint(x: frame.midX, y: frame.minY+rocket.size.height/2)
+        rocket.zPosition = ZPositions.rocket
+        rocket.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rocket.size.width-5, height: rocket.size.height))
+        rocket.physicsBody?.categoryBitMask = PhysicsSettings.rocket
+        rocket.physicsBody?.isDynamic = false
+        addChild(rocket)
+        
+        timer = Timer.scheduledTimer(timeInterval: difficulty, target: self, selector: #selector(spawnObject), userInfo: nil, repeats: true)
+        
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
+    @objc func spawnObject() {
+        let randSpawn = Int(arc4random_uniform(UInt32(2)))
+        let object = SKSpriteNode(imageNamed: objectImages[randSpawn])
+        object.size = CGSize(width: 40, height: 40)
+        let xPositionSpawn = CGFloat(arc4random_uniform(UInt32(frame.size.width-object.size.width))) + object.size.width/2
+        object.position = CGPoint(x: xPositionSpawn, y: frame.maxY-object.size.height/2)
+        if (randSpawn == 0) {
+            object.zPosition = ZPositions.asteroid
+        } else {
+            object.zPosition = ZPositions.alien
         }
+        object.physicsBody = SKPhysicsBody(circleOfRadius: object.size.width/2)
+        object.physicsBody?.categoryBitMask = PhysicsSettings.object
+        object.physicsBody?.contactTestBitMask = PhysicsSettings.rocket | PhysicsSettings.laser
+        object.physicsBody?.collisionBitMask = PhysicsSettings.none
+        object.physicsBody?.isDynamic = true
+        addChild(object)
     }
     
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
+    func difficultyIncrease() {
+        difficulty -= 0.05
+        timer.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: difficulty, target: self, selector: #selector(spawnObject), userInfo: nil, repeats: true)
+    }
+    
+    func fireLaser() {
+        run(SKAction.playSoundFileNamed("Laser.mp3", waitForCompletion: false))
+        let laser = SKSpriteNode(imageNamed: "LaserImage")
+        laser.position = CGPoint(x: rocket.position.x, y: rocket.position.y + 5)
+        laser.size = CGSize(width: 5, height: 20)
+        laser.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: laser.size.width, height: laser.size.height))
+        laser.physicsBody?.affectedByGravity = false
+        laser.physicsBody?.isDynamic = true
+        laser.physicsBody?.categoryBitMask = PhysicsSettings.laser
+        laser.physicsBody?.contactTestBitMask = PhysicsSettings.object
+        laser.physicsBody?.collisionBitMask = PhysicsSettings.none
+        laser.zPosition = ZPositions.laser
+        addChild(laser)
+        
+        let laserDuration:TimeInterval = 0.2
+        var action = [SKAction]()
+        action.append(SKAction.move(to: CGPoint(x: laser.position.x, y: frame.size.height), duration: laserDuration))
+        action.append(SKAction.removeFromParent())
+        laser.run(SKAction.sequence(action))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
+        fireLaser()
+    }
+    
+    func gameOverMethod() {
+        timer.invalidate()
+        gameOver = SKLabelNode(text: "Game Over! Final Score: \(score)")
+        gameOver.fontSize = 25
+        gameOver.fontName = "ChalkboardSE-Bold"
+        gameOver.position = CGPoint(x: frame.midX, y: frame.midY)
+        gameOver.zPosition = ZPositions.label
+        addChild(gameOver)
+    }
+    
+    func laserCollision(laser: SKSpriteNode, object : SKSpriteNode) {
+        //NEED TO FIX SCORE
+        if (object.zPosition == ZPositions.alien) {
+            score += 2
+        } else {
+            score += 1
+        }
+        let explode = SKEmitterNode(fileNamed: "Fire")!
+        explode.position = object.position
+        addChild(explode)
+        run(SKAction.playSoundFileNamed("Explosion.mp3", waitForCompletion: false))
+        
+        run(SKAction.wait(forDuration: 0.5)) {
+            explode.removeFromParent()
         }
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        removeChildren(in: [laser, object])
+        switch score {
+        case 1,5,10,20,30:
+            difficultyIncrease()
+        default:
+            break
+        }
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+    func rocketCollision(rocket: SKSpriteNode, object : SKSpriteNode) {
+        let explode = SKEmitterNode(fileNamed: "Fire")!
+        explode.position = rocket.position
+        addChild(explode)
+        run(SKAction.playSoundFileNamed("Explosion.mp3", waitForCompletion: false))
+        
+        run(SKAction.wait(forDuration: 0.5)) {
+            explode.removeFromParent()
+        }
+        
+        removeChildren(in: [rocket, object])
+        
     }
 }
+
+extension GameScene : SKPhysicsContactDelegate {
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        let contactBitMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        
+        switch contactBitMask {
+        case PhysicsSettings.rocket | PhysicsSettings.object:
+            if (contact.bodyA.categoryBitMask == PhysicsSettings.rocket) {
+                rocketCollision(rocket: contact.bodyA.node as! SKSpriteNode, object: contact.bodyB.node as! SKSpriteNode)
+            } else {
+                rocketCollision(rocket: contact.bodyB.node as! SKSpriteNode, object: contact.bodyA.node as! SKSpriteNode)
+            }
+            gameOverMethod()
+        case PhysicsSettings.laser | PhysicsSettings.object:
+            if (contact.bodyA.categoryBitMask == PhysicsSettings.laser) {
+                laserCollision(laser: contact.bodyA.node as! SKSpriteNode, object: contact.bodyB.node as! SKSpriteNode)
+            } else {
+                   laserCollision(laser: contact.bodyB.node as! SKSpriteNode, object: contact.bodyA.node as! SKSpriteNode)
+            }
+        default:
+            print("Some Unknown Collison Happened")
+        }
+    }
+}
+
