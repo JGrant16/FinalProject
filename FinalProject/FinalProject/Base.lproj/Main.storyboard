@@ -13,7 +13,7 @@
         <!--Main Menu View Controller-->
         <scene sceneID="qBg-K9-OGH">
             <objects>
-                <viewController title="Main Menu View Controller" id="Hh9-PG-YFF" sceneMemberID="viewController">
+                <viewController title="Main Menu View Controller" modalTransitionStyle="crossDissolve" id="Hh9-PG-YFF" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rIg-cm-Rvm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -88,7 +88,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkC-gn-Bnp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-244" y="-628"/>
+            <point key="canvasLocation" x="-244" y="-617"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
@@ -117,13 +117,29 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="0.1388205901" green="0.1388205901" blue="0.1388205901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yk8-q0-oyR">
+                                <rect key="frame" x="37.5" y="551" width="300" height="55.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="yk8-q0-oyR" secondAttribute="height" multiplier="27:5" id="dXh-Lr-XHK"/>
+                                </constraints>
+                                <state key="normal" image="back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Hh9-PG-YFF" kind="show" id="ooe-JR-BP7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.17927109769999999" green="0.17927109769999999" blue="0.17927109769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="yk8-q0-oyR" firstAttribute="centerX" secondItem="kgF-Z2-qio" secondAttribute="centerX" id="0ef-QM-Yvc"/>
                             <constraint firstItem="kgF-Z2-qio" firstAttribute="bottom" secondItem="wfi-eZ-hIn" secondAttribute="bottom" id="G1D-uJ-ljN"/>
+                            <constraint firstItem="yk8-q0-oyR" firstAttribute="width" secondItem="ETS-ba-UHE" secondAttribute="width" multiplier="0.8" id="KWC-mv-9cP"/>
+                            <constraint firstItem="yk8-q0-oyR" firstAttribute="width" secondItem="yk8-q0-oyR" secondAttribute="height" multiplier="27:5" id="XoD-0N-1qq"/>
                             <constraint firstItem="wfi-eZ-hIn" firstAttribute="leading" secondItem="kgF-Z2-qio" secondAttribute="leading" id="aXl-kg-304"/>
                             <constraint firstItem="kgF-Z2-qio" firstAttribute="top" secondItem="wfi-eZ-hIn" secondAttribute="top" constant="20" id="cqI-61-DHv"/>
+                            <constraint firstItem="kgF-Z2-qio" firstAttribute="bottom" secondItem="yk8-q0-oyR" secondAttribute="bottom" multiplier="1.1" id="k2t-Eg-NmP"/>
                             <constraint firstItem="kgF-Z2-qio" firstAttribute="trailing" secondItem="wfi-eZ-hIn" secondAttribute="trailing" id="m0H-cX-bLy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kgF-Z2-qio"/>
@@ -145,12 +161,28 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="0.1388205901" green="0.1388205901" blue="0.1388205901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUy-p2-cYQ">
+                                <rect key="frame" x="37.5" y="551" width="300" height="55.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zUy-p2-cYQ" secondAttribute="height" multiplier="27:5" id="Zev-PU-OVj"/>
+                                </constraints>
+                                <state key="normal" image="back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Hh9-PG-YFF" kind="show" id="mQw-yG-gIv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.1388205901" green="0.1388205901" blue="0.1388205901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="oXY-mc-YEW" firstAttribute="bottom" secondItem="zUy-p2-cYQ" secondAttribute="bottom" multiplier="1.1" id="E8r-cP-rmu"/>
                             <constraint firstItem="ECF-gG-19B" firstAttribute="bottom" secondItem="oXY-mc-YEW" secondAttribute="bottom" id="Fag-Xc-9B9"/>
+                            <constraint firstItem="zUy-p2-cYQ" firstAttribute="width" secondItem="zUy-p2-cYQ" secondAttribute="height" multiplier="27:5" id="all-Nv-3Ni"/>
+                            <constraint firstItem="zUy-p2-cYQ" firstAttribute="width" secondItem="lIU-hN-HkD" secondAttribute="width" multiplier="0.8" id="eKm-03-Iqj"/>
                             <constraint firstItem="oXY-mc-YEW" firstAttribute="top" secondItem="ECF-gG-19B" secondAttribute="top" constant="20" id="hjF-xi-iEa"/>
+                            <constraint firstItem="zUy-p2-cYQ" firstAttribute="centerX" secondItem="oXY-mc-YEW" secondAttribute="centerX" id="iax-DQ-Cj7"/>
                             <constraint firstItem="ECF-gG-19B" firstAttribute="leading" secondItem="oXY-mc-YEW" secondAttribute="leading" id="mrh-iD-9XY"/>
                             <constraint firstItem="oXY-mc-YEW" firstAttribute="trailing" secondItem="ECF-gG-19B" secondAttribute="trailing" id="vkJ-Cy-A9K"/>
                         </constraints>
@@ -164,9 +196,13 @@
     </scenes>
     <resources>
         <image name="Harris-Space-wallpaper" width="736" height="1308"/>
+        <image name="back" width="500" height="100"/>
         <image name="highscore" width="500" height="100"/>
         <image name="settings" width="500" height="100"/>
         <image name="startgame" width="500" height="100"/>
         <image name="title2" width="800" height="400"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="mQw-yG-gIv"/>
+    </inferredMetricsTieBreakers>
 </document>
