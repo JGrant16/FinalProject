@@ -23,4 +23,5 @@ enum PhysicsSettings {
     static let object : UInt32 = 0x1
     static let rocket : UInt32 = 0x1 << 1
     static let laser : UInt32 = 0x1 << 2
+    static let alienLaser : UInt32 = 0x1 << 3
 }

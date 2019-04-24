@@ -16,7 +16,8 @@ class GameScene: SKScene {
     var gameOver : SKLabelNode!
     var timer : Timer!
     var scoreLabel : SKLabelNode!
-    var difficulty = 1.5
+    var spawnDifficulty = 1.5
+    var speedDifficulty = 3.0
     var score = 0 {
         didSet {
             scoreLabel.text = "\(score)"
@@ -28,7 +29,6 @@ class GameScene: SKScene {
     }
     
     func setScene() {
-        physicsWorld.gravity = CGVector(dx: 0.0, dy: -1.0)
         physicsWorld.contactDelegate = self
         
         scoreLabel = SKLabelNode(text: "0")
@@ -54,36 +54,71 @@ class GameScene: SKScene {
         rocket.physicsBody?.isDynamic = false
         addChild(rocket)
         
-        timer = Timer.scheduledTimer(timeInterval: difficulty, target: self, selector: #selector(spawnObject), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: spawnDifficulty, target: self, selector: #selector(spawnObject), userInfo: nil, repeats: true)
         
     }
     
     @objc func spawnObject() {
         let randSpawn = Int(arc4random_uniform(UInt32(2)))
         let object = SKSpriteNode(imageNamed: objectImages[randSpawn])
+        
         object.size = CGSize(width: 40, height: 40)
         let xPositionSpawn = CGFloat(arc4random_uniform(UInt32(frame.size.width-object.size.width))) + object.size.width/2
         object.position = CGPoint(x: xPositionSpawn, y: frame.maxY-object.size.height/2)
-        if (randSpawn == 0) {
-            object.zPosition = ZPositions.asteroid
-        } else {
-            object.zPosition = ZPositions.alien
-        }
         object.physicsBody = SKPhysicsBody(circleOfRadius: object.size.width/2)
         object.physicsBody?.categoryBitMask = PhysicsSettings.object
         object.physicsBody?.contactTestBitMask = PhysicsSettings.rocket | PhysicsSettings.laser
         object.physicsBody?.collisionBitMask = PhysicsSettings.none
         object.physicsBody?.isDynamic = true
+        object.physicsBody?.affectedByGravity = false
+        if (randSpawn == 0) {
+            object.zPosition = ZPositions.asteroid
+        } else {
+            object.zPosition = ZPositions.alien
+            objectFireLaser(alien: object)
+        }
         addChild(object)
+        let objectDuration:TimeInterval = speedDifficulty
+        var action = [SKAction]()
+        action.append(SKAction.move(to: CGPoint(x: xPositionSpawn, y: frame.minY), duration: objectDuration))
+        action.append(SKAction.removeFromParent())
+        object.run(SKAction.sequence(action))
+        
     }
     
     func difficultyIncrease() {
-        difficulty -= 0.05
-        timer.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: difficulty, target: self, selector: #selector(spawnObject), userInfo: nil, repeats: true)
+        switch score {
+        case 1,5,10,20,30:
+            spawnDifficulty -= 0.05
+            timer.invalidate()
+            timer = Timer.scheduledTimer(timeInterval: spawnDifficulty, target: self, selector: #selector(spawnObject), userInfo: nil, repeats: true)
+        default:
+            break
+        }
     }
     
-    func fireLaser() {
+    func objectFireLaser(alien : SKSpriteNode) {
+        run(SKAction.playSoundFileNamed("Laser.mp3", waitForCompletion: false))
+        let laser = SKSpriteNode(imageNamed: "AlienLaser")
+        laser.size = CGSize(width: 10, height: 10)
+        laser.position = CGPoint(x: alien.position.x, y: alien.position.y-5)
+        laser.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: laser.size.width, height: laser.size.height))
+        laser.physicsBody?.affectedByGravity = false
+        laser.physicsBody?.isDynamic = true
+        laser.physicsBody?.categoryBitMask = PhysicsSettings.alienLaser
+        laser.physicsBody?.contactTestBitMask = PhysicsSettings.rocket
+        laser.physicsBody?.collisionBitMask = PhysicsSettings.none
+        laser.zPosition = ZPositions.laser
+        addChild(laser)
+        
+        let laserDuration:TimeInterval = 1.0
+        var action = [SKAction]()
+        action.append(SKAction.move(to: CGPoint(x: alien.position.x, y: frame.minY), duration: laserDuration))
+        action.append(SKAction.removeFromParent())
+        laser.run(SKAction.sequence(action))
+    }
+    
+    func userFireLaser() {
         run(SKAction.playSoundFileNamed("Laser.mp3", waitForCompletion: false))
         let laser = SKSpriteNode(imageNamed: "LaserImage")
         laser.position = CGPoint(x: rocket.position.x, y: rocket.position.y + 5)
@@ -105,7 +140,7 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        fireLaser()
+        userFireLaser()
     }
     
     func gameOverMethod() {
@@ -119,8 +154,7 @@ class GameScene: SKScene {
     }
     
     func laserCollision(laser: SKSpriteNode, object : SKSpriteNode) {
-        //NEED TO FIX SCORE
-        if (object.zPosition == ZPositions.alien) {
+        if (object.zPosition >= ZPositions.alien) {
             score += 2
         } else {
             score += 1
@@ -135,12 +169,8 @@ class GameScene: SKScene {
         }
         
         removeChildren(in: [laser, object])
-        switch score {
-        case 1,5,10,20,30:
-            difficultyIncrease()
-        default:
-            break
-        }
+        
+        difficultyIncrease()
     }
     
     func rocketCollision(rocket: SKSpriteNode, object : SKSpriteNode) {
@@ -154,7 +184,6 @@ class GameScene: SKScene {
         }
         
         removeChildren(in: [rocket, object])
-        
     }
 }
 
@@ -177,9 +206,17 @@ extension GameScene : SKPhysicsContactDelegate {
             } else {
                    laserCollision(laser: contact.bodyB.node as! SKSpriteNode, object: contact.bodyA.node as! SKSpriteNode)
             }
+        case PhysicsSettings.alienLaser | PhysicsSettings.rocket:
+            if (contact.bodyA.categoryBitMask == PhysicsSettings.rocket) {
+                rocketCollision(rocket: contact.bodyA.node as! SKSpriteNode, object: contact.bodyB.node as! SKSpriteNode)
+            } else {
+                rocketCollision(rocket: contact.bodyB.node as! SKSpriteNode, object: contact.bodyA.node as! SKSpriteNode)
+            }
+            gameOverMethod()
         default:
             print("Some Unknown Collison Happened")
         }
     }
 }
+
 
