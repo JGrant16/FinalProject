@@ -7,7 +7,7 @@
 //
 
 import SpriteKit
-
+import CoreMotion
 class GameScene: SKScene {
     
     var rocket : SKSpriteNode!
@@ -18,23 +18,53 @@ class GameScene: SKScene {
     var scoreLabel : SKLabelNode!
     var spawnDifficulty = 1.5
     var speedDifficulty = 3.0
+    let motion = CMMotionManager()
+    var xAcceleration : CGFloat = 0
+    var yAcceleration : CGFloat = 0
+    var backgroundMusic : SKAudioNode!
     var score = 0 {
         didSet {
-            scoreLabel.text = "\(score)"
+            scoreLabel.text = "Score: \(score)"
         }
     }
     
     override func didMove(to view: SKView) {
-       setScene()
+        setScene()
+        motion.accelerometerUpdateInterval = 0.1
+        motion.startAccelerometerUpdates(to: OperationQueue.current!) {(data: CMAccelerometerData?, error: Error?) in
+            if let accelData = data {
+                self.xAcceleration = CGFloat(accelData.acceleration.x)*0.5
+                self.yAcceleration = CGFloat(accelData.acceleration.y)
+            }
+        }
+    }
+    
+    override func didSimulatePhysics() {
+        rocket.position.x += xAcceleration*40
+        rocket.position.y += yAcceleration*40
+        if (rocket.position.x < -rocket.size.width/2) {
+            rocket.position = CGPoint(x: frame.width+rocket.size.width/2, y: rocket.position.y)
+        } else if (rocket.position.x > frame.width + rocket.size.width/2) {
+            rocket.position = CGPoint(x: -rocket.size.width/2, y: rocket.position.y)
+        } else if (rocket.position.y < -rocket.size.height/2) {
+            rocket.position = CGPoint(x: rocket.position.x, y: frame.height+rocket.size.height/2)
+        } else if (rocket.position.y > frame.height + rocket.size.height/2) {
+            rocket.position = CGPoint(x: rocket.position.x, y: -rocket.size.height/2)
+        }
     }
     
     func setScene() {
+        if let musicURL = Bundle.main.url(forResource: "Light-Years_v001", withExtension: "mp3") {
+            backgroundMusic = SKAudioNode(url: musicURL)
+            addChild(backgroundMusic)
+        }
+        
         physicsWorld.contactDelegate = self
         
-        scoreLabel = SKLabelNode(text: "0")
+        scoreLabel = SKLabelNode(text: "Score: 0")
         scoreLabel.zPosition = ZPositions.label
-        scoreLabel.position = CGPoint(x: 20, y: frame.size.height - 60)
-        scoreLabel.fontSize = 40
+        scoreLabel.position = CGPoint(x: 70, y: frame.size.height - 60)
+        scoreLabel.fontSize = 25
         scoreLabel.fontColor = UIColor.yellow
         scoreLabel.fontName = "ChalkboardSE-Bold"
         addChild(scoreLabel)
@@ -47,7 +77,7 @@ class GameScene: SKScene {
         
         rocket = SKSpriteNode(imageNamed: "Spaceship-PNG-File")
         rocket.size = CGSize(width: frame.size.width/7, height: frame.size.height/7)
-        rocket.position = CGPoint(x: frame.midX, y: frame.minY+rocket.size.height/2)
+        rocket.position = CGPoint(x: frame.midX, y: frame.midY)
         rocket.zPosition = ZPositions.rocket
         rocket.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rocket.size.width-5, height: rocket.size.height))
         rocket.physicsBody?.categoryBitMask = PhysicsSettings.rocket
@@ -91,6 +121,7 @@ class GameScene: SKScene {
         case 1,5,10,20,30:
             spawnDifficulty -= 0.05
             timer.invalidate()
+            print(spawnDifficulty)
             timer = Timer.scheduledTimer(timeInterval: spawnDifficulty, target: self, selector: #selector(spawnObject), userInfo: nil, repeats: true)
         default:
             break
