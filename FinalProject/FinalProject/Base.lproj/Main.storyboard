@@ -10,15 +10,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main Menu View Controller-->
         <scene sceneID="qBg-K9-OGH">
             <objects>
-                <viewController id="Hh9-PG-YFF" sceneMemberID="viewController">
+                <viewController title="Main Menu View Controller" id="Hh9-PG-YFF" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rIg-cm-Rvm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Harris-Space-wallpaper" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DvQ-8Y-u0o">
+                            <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Harris-Space-wallpaper" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DvQ-8Y-u0o">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="0.1388205901" green="0.1388205901" blue="0.1388205901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
@@ -42,6 +42,9 @@
                                 <state key="normal" image="highscore">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <segue destination="zih-KG-2pH" kind="show" id="tRp-1p-fqT"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5Y-xp-eok">
                                 <rect key="frame" x="37.5" y="500.5" width="300" height="55.5"/>
@@ -49,6 +52,9 @@
                                     <constraint firstAttribute="width" secondItem="A5Y-xp-eok" secondAttribute="height" multiplier="27:5" id="CXb-Kf-eRO"/>
                                 </constraints>
                                 <state key="normal" image="settings"/>
+                                <connections>
+                                    <segue destination="eSU-Eo-qD9" kind="show" id="Smg-0I-8eW"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title2" translatesAutoresizingMaskIntoConstraints="NO" id="Fln-yF-fWy">
                                 <rect key="frame" x="0.0" y="40" width="375" height="201"/>
@@ -66,6 +72,7 @@
                             <constraint firstItem="Gq5-VI-HRL" firstAttribute="width" secondItem="rIg-cm-Rvm" secondAttribute="width" multiplier="0.8" id="FUc-y2-kKZ"/>
                             <constraint firstItem="0JH-pe-h1q" firstAttribute="width" secondItem="rIg-cm-Rvm" secondAttribute="width" multiplier="0.8" id="HtO-Wb-9dX"/>
                             <constraint firstItem="DvQ-8Y-u0o" firstAttribute="leading" secondItem="gaZ-Pk-try" secondAttribute="leading" id="Q2i-kh-eWg"/>
+                            <constraint firstItem="gaZ-Pk-try" firstAttribute="bottom" secondItem="DvQ-8Y-u0o" secondAttribute="bottom" id="T3g-xW-NIf"/>
                             <constraint firstItem="gaZ-Pk-try" firstAttribute="bottom" secondItem="A5Y-xp-eok" secondAttribute="bottom" multiplier="1.2" id="VN8-06-QYd"/>
                             <constraint firstItem="gaZ-Pk-try" firstAttribute="trailing" secondItem="DvQ-8Y-u0o" secondAttribute="trailing" id="YuQ-Js-tHB"/>
                             <constraint firstItem="Fln-yF-fWy" firstAttribute="top" secondItem="gaZ-Pk-try" secondAttribute="top" multiplier="2" id="YxU-8O-mbp"/>
@@ -81,12 +88,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkC-gn-Bnp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-602.39999999999998" y="112.89355322338831"/>
+            <point key="canvasLocation" x="-244" y="-628"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="FinalProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" id="BV1-FR-VrT" customClass="GameViewController" customModule="FinalProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -96,7 +103,63 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="375" y="119"/>
+            <point key="canvasLocation" x="-244" y="300"/>
+        </scene>
+        <!--Highscore View Controller-->
+        <scene sceneID="Mcx-Wp-XYA">
+            <objects>
+                <viewController title="Highscore View Controller" modalTransitionStyle="crossDissolve" id="zih-KG-2pH" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ETS-ba-UHE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Harris-Space-wallpaper" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wfi-eZ-hIn">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.1388205901" green="0.1388205901" blue="0.1388205901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.17927109769999999" green="0.17927109769999999" blue="0.17927109769999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="kgF-Z2-qio" firstAttribute="bottom" secondItem="wfi-eZ-hIn" secondAttribute="bottom" id="G1D-uJ-ljN"/>
+                            <constraint firstItem="wfi-eZ-hIn" firstAttribute="leading" secondItem="kgF-Z2-qio" secondAttribute="leading" id="aXl-kg-304"/>
+                            <constraint firstItem="kgF-Z2-qio" firstAttribute="top" secondItem="wfi-eZ-hIn" secondAttribute="top" constant="20" id="cqI-61-DHv"/>
+                            <constraint firstItem="kgF-Z2-qio" firstAttribute="trailing" secondItem="wfi-eZ-hIn" secondAttribute="trailing" id="m0H-cX-bLy"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="kgF-Z2-qio"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gr6-Ck-a3t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1140" y="300"/>
+        </scene>
+        <!--Settings Controller-->
+        <scene sceneID="7um-v1-JjH">
+            <objects>
+                <viewController title="Settings Controller" modalTransitionStyle="crossDissolve" id="eSU-Eo-qD9" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lIU-hN-HkD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Harris-Space-wallpaper" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ECF-gG-19B">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="0.1388205901" green="0.1388205901" blue="0.1388205901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1388205901" green="0.1388205901" blue="0.1388205901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ECF-gG-19B" firstAttribute="bottom" secondItem="oXY-mc-YEW" secondAttribute="bottom" id="Fag-Xc-9B9"/>
+                            <constraint firstItem="oXY-mc-YEW" firstAttribute="top" secondItem="ECF-gG-19B" secondAttribute="top" constant="20" id="hjF-xi-iEa"/>
+                            <constraint firstItem="ECF-gG-19B" firstAttribute="leading" secondItem="oXY-mc-YEW" secondAttribute="leading" id="mrh-iD-9XY"/>
+                            <constraint firstItem="oXY-mc-YEW" firstAttribute="trailing" secondItem="ECF-gG-19B" secondAttribute="trailing" id="vkJ-Cy-A9K"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="oXY-mc-YEW"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rz0-hK-x9q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="640.79999999999995" y="300"/>
         </scene>
     </scenes>
     <resources>

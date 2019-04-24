@@ -15,7 +15,6 @@
 		31345365226687D1006D45EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31345363226687D1006D45EB /* LaunchScreen.storyboard */; };
 		31345370226687D1006D45EB /* FinalProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3134536F226687D1006D45EB /* FinalProjectTests.swift */; };
 		3134537B226687D1006D45EB /* FinalProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3134537A226687D1006D45EB /* FinalProjectUITests.swift */; };
-		31D57650227024E20002E956 /* Light-Years_v001.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 31D5764F227024E20002E956 /* Light-Years_v001.mp3 */; };
 		31E2DADB226EA13F00DCD60A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E2DADA226EA13F00DCD60A /* Settings.swift */; };
 		31E2DADF226EC61200DCD60A /* Laser.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 31E2DADE226EC5E300DCD60A /* Laser.mp3 */; };
 		31E2DAE1226ECC3800DCD60A /* Fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 31E2DAE0226ECC3800DCD60A /* Fire.sks */; };
@@ -54,7 +53,6 @@
 		31345376226687D1006D45EB /* FinalProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinalProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3134537A226687D1006D45EB /* FinalProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalProjectUITests.swift; sourceTree = "<group>"; };
 		3134537C226687D1006D45EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		31D5764F227024E20002E956 /* Light-Years_v001.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Light-Years_v001.mp3"; path = "../../../../Downloads/Light-Years_v001.mp3"; sourceTree = "<group>"; };
 		31E2DADA226EA13F00DCD60A /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		31E2DADE226EC5E300DCD60A /* Laser.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Laser.mp3; sourceTree = "<group>"; };
 		31E2DAE0226ECC3800DCD60A /* Fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fire.sks; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 		31E2DAE4226ECD2E00DCD60A /* Effects */ = {
 			isa = PBXGroup;
 			children = (
-				31D5764F227024E20002E956 /* Light-Years_v001.mp3 */,
 				31E2DAE0226ECC3800DCD60A /* Fire.sks */,
 				31E2DADE226EC5E300DCD60A /* Laser.mp3 */,
 				31E2DAE5226ECD3500DCD60A /* Explosion.mp3 */,
@@ -256,7 +253,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				31345360226687D0006D45EB /* Main.storyboard in Resources */,
-				31D57650227024E20002E956 /* Light-Years_v001.mp3 in Resources */,
 				31345362226687D1006D45EB /* Assets.xcassets in Resources */,
 				31E2DADF226EC61200DCD60A /* Laser.mp3 in Resources */,
 				31E2DAE1226ECC3800DCD60A /* Fire.sks in Resources */,
@@ -465,14 +461,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 856UY68BQ7;
+				DEVELOPMENT_TEAM = UF5A35SSP8;
 				INFOPLIST_FILE = FinalProject/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.umd.jgrant16;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.umd.qsun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -484,14 +480,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 856UY68BQ7;
+				DEVELOPMENT_TEAM = UF5A35SSP8;
 				INFOPLIST_FILE = FinalProject/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.umd.jgrant16;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.umd.qsun;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

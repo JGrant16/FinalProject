@@ -54,10 +54,12 @@ class GameScene: SKScene {
     }
     
     func setScene() {
+        /*
         if let musicURL = Bundle.main.url(forResource: "Light-Years_v001", withExtension: "mp3") {
             backgroundMusic = SKAudioNode(url: musicURL)
             addChild(backgroundMusic)
         }
+        */
         
         physicsWorld.contactDelegate = self
         
