@@ -24,6 +24,9 @@ class GameScene: SKScene {
     var yAcceleration : CGFloat = 0
     var gameOverDetect : Bool = false
     var backgroundMusic : SKAudioNode!
+    var rocketAngle: CGFloat = 0
+    var rocketPrevAngle: CGFloat = 0
+
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
@@ -36,7 +39,7 @@ class GameScene: SKScene {
         motion.startAccelerometerUpdates(to: OperationQueue.current!) {(data: CMAccelerometerData?, error: Error?) in
             if let accelData = data {
                 self.xAcceleration = CGFloat(accelData.acceleration.x)*0.7
-                self.yAcceleration = CGFloat(accelData.acceleration.y)*0.5 + 0.25
+                self.yAcceleration = CGFloat(accelData.acceleration.y)*0.6 + 0.3
                 
             }
         }
@@ -59,9 +62,15 @@ class GameScene: SKScene {
         }
         let dx = rocket.position.x - previousX
         let dy = rocket.position.y - previousY
-        let angle = atan2(dy, dx) + 3*(.pi)/2
-        //rocket.zRotation = angle
-        //rocket.run(SKAction.rotate(byAngle: angle, duration: 0.2))
+        let angle = atan2(dy, dx)
+        if (angle - rocketPrevAngle > .pi) {
+            rocketAngle += 2 * .pi
+        } else if (rocketPrevAngle - angle > .pi) {
+            rocketAngle -= 2 * .pi
+        }
+        rocketPrevAngle = angle
+        rocketAngle = angle * 0.12 + rocketAngle * (1 - 0.12)
+        rocket.zRotation = rocketAngle - (.pi)/2
         
     }
     
