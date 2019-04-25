@@ -17,7 +17,7 @@ class GameScene: SKScene {
     var gameOver : SKLabelNode!
     var timer : Timer!
     var scoreLabel : SKLabelNode!
-    var spawnDifficulty = SpawnDifficultySettings.hard
+    var spawnDifficulty = SpawnDifficultySettings.medium
     var speedDifficulty = 4.0
     let motion = CMMotionManager()
     var xAcceleration : CGFloat = 0
@@ -35,15 +35,19 @@ class GameScene: SKScene {
         motion.accelerometerUpdateInterval = 0.1
         motion.startAccelerometerUpdates(to: OperationQueue.current!) {(data: CMAccelerometerData?, error: Error?) in
             if let accelData = data {
-                self.xAcceleration = CGFloat(accelData.acceleration.x)*0.5
-                self.yAcceleration = CGFloat(accelData.acceleration.y)*0.9
+                self.xAcceleration = CGFloat(accelData.acceleration.x)*0.7
+                self.yAcceleration = CGFloat(accelData.acceleration.y)*0.5 + 0.25
+                
             }
         }
     }
     
     override func didSimulatePhysics() {
-        rocket.position.x += xAcceleration*40
-        rocket.position.y += yAcceleration*40
+        let previousX = rocket.position.x
+        let previousY = rocket.position.y
+        rocket.position.x += xAcceleration*35
+        rocket.position.y += yAcceleration*35
+        
         if (rocket.position.x < -rocket.size.width/2) {
             rocket.position = CGPoint(x: frame.width+rocket.size.width/2, y: rocket.position.y)
         } else if (rocket.position.x > frame.width + rocket.size.width/2) {
@@ -53,12 +57,12 @@ class GameScene: SKScene {
         } else if (rocket.position.y > frame.height + rocket.size.height/2) {
             rocket.position = CGPoint(x: rocket.position.x, y: -rocket.size.height/2)
         }
+        let dx = rocket.position.x - previousX
+        let dy = rocket.position.y - previousY
+        let angle = atan2(dy, dx) + 3*(.pi)/2
+        rocket.zRotation = angle
+        //rocket.run(SKAction.rotate(byAngle: angle, duration: 0.2))
         
-        if let body = rocket.physicsBody {
-            if (body.velocity.speed() > 0.01) {
-                rocket.zRotation = body.velocity.angle() - 2*(.pi)
-            }
-        }
     }
     
     func setScene() {
@@ -89,7 +93,8 @@ class GameScene: SKScene {
         rocket.zPosition = ZPositions.rocket
         rocket.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rocket.size.width-5, height: rocket.size.height))
         rocket.physicsBody?.categoryBitMask = PhysicsSettings.rocket
-        rocket.physicsBody?.isDynamic = false
+        rocket.physicsBody?.isDynamic = true
+        rocket.physicsBody?.affectedByGravity = false
         addChild(rocket)
         
         timer = Timer.scheduledTimer(timeInterval: spawnDifficulty, target: self, selector: #selector(spawnObject), userInfo: nil, repeats: true)
@@ -160,6 +165,8 @@ class GameScene: SKScene {
     func userFireLaser() {
         run(SKAction.playSoundFileNamed("Laser.mp3", waitForCompletion: false))
         let laser = SKSpriteNode(imageNamed: "LaserImage")
+        let currAngle = rocket.zRotation
+        //laser.position = CGPoint(x: rocket.position.x + 10*sin(currAngle), y: rocket.position.y + 10*cos(currAngle))
         laser.position = CGPoint(x: rocket.position.x, y: rocket.position.y + 5)
         laser.size = CGSize(width: 5, height: 20)
         laser.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: laser.size.width, height: laser.size.height))
@@ -173,7 +180,7 @@ class GameScene: SKScene {
         
         let laserDuration:TimeInterval = 0.2
         var action = [SKAction]()
-        action.append(SKAction.move(to: CGPoint(x: laser.position.x, y: frame.size.height), duration: laserDuration))
+        action.append(SKAction.move(to: CGPoint(x: laser.position.x-sin(currAngle), y: frame.size.height), duration: laserDuration))
         action.append(SKAction.removeFromParent())
         laser.run(SKAction.sequence(action))
     }
@@ -265,14 +272,4 @@ extension GameScene : SKPhysicsContactDelegate {
         }
     }
 }
-
-extension CGVector {
-    func speed() -> CGFloat {
-        return sqrt(dx*dx+dy*dy)
-    }
-    func angle() -> CGFloat {
-        return atan2(dy, dx)
-    }
-}
-
 
