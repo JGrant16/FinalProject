@@ -10,13 +10,21 @@ import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
+    
+    var currScene: GameScene?;
 
+    @IBAction func leaveGame(_ sender: UIButton) {
+        // Should kill the current scene, otherwise it will become laggy after a few plays.
+        currScene!.isPaused = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
         if let view = self.view as! SKView? {
             let scene = GameScene(size: view.bounds.size)
             scene.scaleMode = .aspectFill
+            currScene = scene
                 
             view.presentScene(scene)
             

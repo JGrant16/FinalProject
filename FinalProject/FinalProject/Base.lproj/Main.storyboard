@@ -97,7 +97,25 @@
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TG5-rB-F4K">
+                                <rect key="frame" x="287.5" y="26" width="55" height="48"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="25"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="leaveGame:" destination="BV1-FR-VrT" eventType="touchUpInside" id="h2C-HJ-5wc"/>
+                                    <segue destination="Hh9-PG-YFF" kind="show" id="yZN-Cs-Ilc"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="TG5-rB-F4K" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4qk-I5-YsI" secondAttribute="leading" symbolic="YES" id="AqG-UU-uCq"/>
+                            <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" secondItem="TG5-rB-F4K" secondAttribute="centerX" constant="60" id="cmr-oj-R5Y"/>
+                            <constraint firstItem="TG5-rB-F4K" firstAttribute="centerY" secondItem="3se-qz-xqx" secondAttribute="top" constant="50" id="wSe-1O-K2B"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                     </view>
                 </viewController>
@@ -203,6 +221,6 @@
         <image name="title2" width="800" height="400"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mQw-yG-gIv"/>
+        <segue reference="yZN-Cs-Ilc"/>
     </inferredMetricsTieBreakers>
 </document>
