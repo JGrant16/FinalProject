@@ -8,19 +8,21 @@
 
 import SpriteKit
 import CoreMotion
+
 class GameScene: SKScene {
     
     var rocket : SKSpriteNode!
     var backGround : SKSpriteNode!
-    var objectImages : [String] = ["asteroid", "AlienShip"]
+    var objectImages : [String] = ["436AsteroidBlue", "436AsteroidWhite", "436Asteroid", "436EnemyUFO"]
     var gameOver : SKLabelNode!
     var timer : Timer!
     var scoreLabel : SKLabelNode!
-    var spawnDifficulty = 1.5
+    var spawnDifficulty = SpawnDifficultySettings.medium
     var speedDifficulty = 3.0
     let motion = CMMotionManager()
     var xAcceleration : CGFloat = 0
     var yAcceleration : CGFloat = 0
+    var gameOverDetect : Bool = false
     var backgroundMusic : SKAudioNode!
     var score = 0 {
         didSet {
@@ -34,7 +36,7 @@ class GameScene: SKScene {
         motion.startAccelerometerUpdates(to: OperationQueue.current!) {(data: CMAccelerometerData?, error: Error?) in
             if let accelData = data {
                 self.xAcceleration = CGFloat(accelData.acceleration.x)*0.5
-                self.yAcceleration = CGFloat(accelData.acceleration.y)
+                self.yAcceleration = CGFloat(accelData.acceleration.y)*0.9
             }
         }
     }
@@ -51,15 +53,19 @@ class GameScene: SKScene {
         } else if (rocket.position.y > frame.height + rocket.size.height/2) {
             rocket.position = CGPoint(x: rocket.position.x, y: -rocket.size.height/2)
         }
+        
+        if let body = rocket.physicsBody {
+            if (body.velocity.speed() > 0.01) {
+                rocket.zRotation = body.velocity.angle() - 2*(.pi)
+            }
+        }
     }
     
     func setScene() {
-        /*
         if let musicURL = Bundle.main.url(forResource: "Light-Years_v001", withExtension: "mp3") {
             backgroundMusic = SKAudioNode(url: musicURL)
             addChild(backgroundMusic)
         }
-        */
         
         physicsWorld.contactDelegate = self
         
@@ -91,10 +97,10 @@ class GameScene: SKScene {
     }
     
     @objc func spawnObject() {
-        let randSpawn = Int(arc4random_uniform(UInt32(2)))
+        let randSpawn = Int(arc4random_uniform(UInt32(objectImages.count)))
         let object = SKSpriteNode(imageNamed: objectImages[randSpawn])
         
-        object.size = CGSize(width: 40, height: 40)
+        object.size = CGSize(width: 70, height: 40)
         let xPositionSpawn = CGFloat(arc4random_uniform(UInt32(frame.size.width-object.size.width))) + object.size.width/2
         object.position = CGPoint(x: xPositionSpawn, y: frame.maxY-object.size.height/2)
         object.physicsBody = SKPhysicsBody(circleOfRadius: object.size.width/2)
@@ -103,7 +109,7 @@ class GameScene: SKScene {
         object.physicsBody?.collisionBitMask = PhysicsSettings.none
         object.physicsBody?.isDynamic = true
         object.physicsBody?.affectedByGravity = false
-        if (randSpawn == 0) {
+        if (randSpawn == 0 || randSpawn == 1 || randSpawn == 2) {
             object.zPosition = ZPositions.asteroid
         } else {
             object.zPosition = ZPositions.alien
@@ -119,9 +125,9 @@ class GameScene: SKScene {
     }
     
     func difficultyIncrease() {
-        switch score {
-        case 1,5,10,20,30:
-            spawnDifficulty -= 0.05
+        switch score % 10 {
+        case 0:
+            spawnDifficulty -= 0.1
             timer.invalidate()
             print(spawnDifficulty)
             timer = Timer.scheduledTimer(timeInterval: spawnDifficulty, target: self, selector: #selector(spawnObject), userInfo: nil, repeats: true)
@@ -173,7 +179,9 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        userFireLaser()
+        if (gameOverDetect == false) {
+            userFireLaser()
+        }
     }
     
     func gameOverMethod() {
@@ -183,27 +191,33 @@ class GameScene: SKScene {
         gameOver.fontName = "ChalkboardSE-Bold"
         gameOver.position = CGPoint(x: frame.midX, y: frame.midY)
         gameOver.zPosition = ZPositions.label
+        scoreLabel.text = "Score: \(score)"
         addChild(gameOver)
+        gameOverDetect = true
+        //ADDING HIGH SCORES
+        //UserDefaults.standard.set(score, forKey: <#T##String#>)
     }
     
     func laserCollision(laser: SKSpriteNode, object : SKSpriteNode) {
-        if (object.zPosition >= ZPositions.alien) {
-            score += 2
-        } else {
-            score += 1
+        if (gameOverDetect == false) {
+            if (object.zPosition >= ZPositions.alien) {
+                score += 2
+            } else {
+                score += 1
+            }
+            let explode = SKEmitterNode(fileNamed: "Fire")!
+            explode.position = object.position
+            addChild(explode)
+            run(SKAction.playSoundFileNamed("Explosion.mp3", waitForCompletion: false))
+            
+            run(SKAction.wait(forDuration: 0.5)) {
+                explode.removeFromParent()
+            }
+            
+            removeChildren(in: [laser, object])
+            
+            difficultyIncrease()
         }
-        let explode = SKEmitterNode(fileNamed: "Fire")!
-        explode.position = object.position
-        addChild(explode)
-        run(SKAction.playSoundFileNamed("Explosion.mp3", waitForCompletion: false))
-        
-        run(SKAction.wait(forDuration: 0.5)) {
-            explode.removeFromParent()
-        }
-        
-        removeChildren(in: [laser, object])
-        
-        difficultyIncrease()
     }
     
     func rocketCollision(rocket: SKSpriteNode, object : SKSpriteNode) {
@@ -237,7 +251,7 @@ extension GameScene : SKPhysicsContactDelegate {
             if (contact.bodyA.categoryBitMask == PhysicsSettings.laser) {
                 laserCollision(laser: contact.bodyA.node as! SKSpriteNode, object: contact.bodyB.node as! SKSpriteNode)
             } else {
-                   laserCollision(laser: contact.bodyB.node as! SKSpriteNode, object: contact.bodyA.node as! SKSpriteNode)
+                laserCollision(laser: contact.bodyB.node as! SKSpriteNode, object: contact.bodyA.node as! SKSpriteNode)
             }
         case PhysicsSettings.alienLaser | PhysicsSettings.rocket:
             if (contact.bodyA.categoryBitMask == PhysicsSettings.rocket) {
@@ -249,6 +263,15 @@ extension GameScene : SKPhysicsContactDelegate {
         default:
             print("Some Unknown Collison Happened")
         }
+    }
+}
+
+extension CGVector {
+    func speed() -> CGFloat {
+        return sqrt(dx*dx+dy*dy)
+    }
+    func angle() -> CGFloat {
+        return atan2(dy, dx)
     }
 }
 

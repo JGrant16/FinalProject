@@ -25,3 +25,9 @@ enum PhysicsSettings {
     static let laser : UInt32 = 0x1 << 2
     static let alienLaser : UInt32 = 0x1 << 3
 }
+
+enum SpawnDifficultySettings {
+    static let easy : TimeInterval = 1.5
+    static let medium : TimeInterval = 1
+    static let hard : TimeInterval = 0.6
+}
