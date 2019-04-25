@@ -9,7 +9,7 @@
 import SpriteKit
 import CoreMotion
 
-class GameScene: SKScene {
+class GameScene: SKScene, UITextFieldDelegate {
     
     var rocket : SKSpriteNode!
     var backGround : SKSpriteNode!
@@ -26,6 +26,7 @@ class GameScene: SKScene {
     var backgroundMusic : SKAudioNode!
     var rocketAngle: CGFloat = 0
     var rocketPrevAngle: CGFloat = 0
+    var userName : String?
 
     var score = 0 {
         didSet {
@@ -207,13 +208,32 @@ class GameScene: SKScene {
         gameOver = SKLabelNode(text: "Game Over! Final Score: \(score)")
         gameOver.fontSize = 25
         gameOver.fontName = "ChalkboardSE-Bold"
-        gameOver.position = CGPoint(x: frame.midX, y: frame.midY)
+        gameOver.position = CGPoint(x: frame.midX, y: frame.midY+20)
         gameOver.zPosition = ZPositions.label
-        scoreLabel.text = "Score: \(score)"
         addChild(gameOver)
+        
+        scoreLabel.text = "Score: \(score)"
         gameOverDetect = true
-        //ADDING HIGH SCORES
-        //UserDefaults.standard.set(score, forKey: <#T##String#>)
+        
+        let sceneFrame = CGRect(x: frame.midX/2, y: frame.midY/2, width: frame.midX, height: frame.midY)
+        let scene = SKScene(size: sceneFrame.size)
+        scene.backgroundColor = UIColor.lightGray
+        let textFieldFrame = CGRect(x: frame.midX/4, y: frame.midY, width: frame.maxX-frame.midX/2, height: 50)
+        let textField = UITextField(frame: textFieldFrame)
+        textField.font = UIFont(name: "ChalkboardSE-Bold", size: 20)
+        textField.backgroundColor = UIColor.white
+        textField.placeholder = "Please Enter Your Name..."
+        textField.delegate = self
+        view!.addSubview(textField)
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        userName = textField.text
+        UserDefaults.standard.set(score, forKey: userName!)
+        textField.resignFirstResponder()
+        textField.removeFromSuperview()
+        return true
     }
     
     func laserCollision(laser: SKSpriteNode, object : SKSpriteNode) {
