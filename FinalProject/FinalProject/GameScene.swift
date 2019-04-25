@@ -13,12 +13,12 @@ class GameScene: SKScene {
     
     var rocket : SKSpriteNode!
     var backGround : SKSpriteNode!
-    var objectImages : [String] = ["436AsteroidBlue", "436AsteroidWhite", "436Asteroid", "436EnemyUFO"]
+    var objectImages : [String] = ["436AsteroidBlue", "436AsteroidWhite", "436Asteroid", "436EnemyUFO", "436EnemyAlien", "436EnemyAlienBlue"]
     var gameOver : SKLabelNode!
     var timer : Timer!
     var scoreLabel : SKLabelNode!
-    var spawnDifficulty = SpawnDifficultySettings.medium
-    var speedDifficulty = 3.0
+    var spawnDifficulty = SpawnDifficultySettings.hard
+    var speedDifficulty = 4.0
     let motion = CMMotionManager()
     var xAcceleration : CGFloat = 0
     var yAcceleration : CGFloat = 0
@@ -84,7 +84,7 @@ class GameScene: SKScene {
         addChild(backGround)
         
         rocket = SKSpriteNode(imageNamed: "Spaceship-PNG-File")
-        rocket.size = CGSize(width: frame.size.width/7, height: frame.size.height/7)
+        rocket.size = CGSize(width: frame.size.width/8, height: frame.size.height/8)
         rocket.position = CGPoint(x: frame.midX, y: frame.midY)
         rocket.zPosition = ZPositions.rocket
         rocket.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rocket.size.width-5, height: rocket.size.height))
