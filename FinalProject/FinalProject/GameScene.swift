@@ -17,7 +17,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     var gameOver : SKLabelNode!
     var timer : Timer!
     var scoreLabel : SKLabelNode!
-    var spawnDifficulty = SpawnDifficultySettings.medium
+    var spawnDifficulty = SpawnDifficultySettings.easy
     var speedDifficulty = 4.0
     let motion = CMMotionManager()
     var xAcceleration : CGFloat = 0
@@ -175,8 +175,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     func userFireLaser() {
         run(SKAction.playSoundFileNamed("Laser.mp3", waitForCompletion: false))
         let laser = SKSpriteNode(imageNamed: "LaserImage")
-        //let currAngle = rocket.zRotation
-        //laser.position = CGPoint(x: rocket.position.x + 10*sin(currAngle), y: rocket.position.y + 10*cos(currAngle))
+        laser.position = CGPoint(x: rocket.position.x, y: rocket.position.y)
         laser.position = CGPoint(x: rocket.position.x, y: rocket.position.y + 5)
         laser.size = CGSize(width: 5, height: 20)
         laser.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: laser.size.width, height: laser.size.height))
@@ -186,13 +185,34 @@ class GameScene: SKScene, UITextFieldDelegate {
         laser.physicsBody?.contactTestBitMask = PhysicsSettings.object
         laser.physicsBody?.collisionBitMask = PhysicsSettings.none
         laser.zPosition = ZPositions.laser
-        //laser.zRotation = rocket.zRotation
-        rocket.zRotation = 0
+        laser.zRotation = rocket.zRotation
         addChild(laser)
+        
+        let finalY : CGFloat!
+        let finalX : CGFloat!
+        let currAngle = laser.zRotation
+        print(currAngle*180/(.pi))
+        if (0 <= currAngle && currAngle < .pi/2) {
+            print("1")
+            finalY = frame.maxY
+            finalX = laser.position.x - abs((finalY-laser.position.y)*tan(currAngle))
+        } else if (-3*(.pi/2) <= currAngle && currAngle < -1*(.pi)) {
+            print("2")
+            finalY = frame.minY
+            finalX = laser.position.x - abs(laser.position.y*tan(currAngle))
+        } else if (-1*(.pi) <= currAngle && currAngle < -1*(.pi)/2) {
+            print("3")
+            finalY = frame.minY
+            finalX = laser.position.x + abs(laser.position.y*tan(currAngle))
+        } else {
+            print("4")
+            finalY = frame.maxY
+            finalX = laser.position.x + abs((finalY-laser.position.y)*tan(currAngle))
+        }
         
         let laserDuration:TimeInterval = 0.2
         var action = [SKAction]()
-        action.append(SKAction.move(to: CGPoint(x: laser.position.x, y: frame.maxY), duration: laserDuration))
+        action.append(SKAction.move(to: CGPoint(x: finalX, y: finalY), duration: laserDuration))
         action.append(SKAction.removeFromParent())
         laser.run(SKAction.sequence(action))
     }
@@ -210,6 +230,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         gameOver.fontName = "ChalkboardSE-Bold"
         gameOver.position = CGPoint(x: frame.midX, y: frame.midY+20)
         gameOver.zPosition = ZPositions.label
+        gameOver.fontColor = UIColor.yellow
         addChild(gameOver)
         
         scoreLabel.text = "Score: \(score)"
@@ -233,6 +254,13 @@ class GameScene: SKScene, UITextFieldDelegate {
         UserDefaults.standard.set(score, forKey: userName!)
         textField.resignFirstResponder()
         textField.removeFromSuperview()
+        let thanksNode = SKLabelNode(text: "Thanks for Playing \(userName!)!")
+        thanksNode.fontSize = 25
+        thanksNode.fontColor = UIColor.yellow
+        thanksNode.fontName = "ChalkboardSE-Bold"
+        thanksNode.position = CGPoint(x: frame.midX, y: frame.midY-40)
+        thanksNode.zPosition = ZPositions.label
+        addChild(thanksNode)
         return true
     }
     
