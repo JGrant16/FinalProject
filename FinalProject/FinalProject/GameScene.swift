@@ -60,7 +60,7 @@ class GameScene: SKScene {
         let dx = rocket.position.x - previousX
         let dy = rocket.position.y - previousY
         let angle = atan2(dy, dx) + 3*(.pi)/2
-        rocket.zRotation = angle
+        //rocket.zRotation = angle
         //rocket.run(SKAction.rotate(byAngle: angle, duration: 0.2))
         
     }
@@ -165,7 +165,7 @@ class GameScene: SKScene {
     func userFireLaser() {
         run(SKAction.playSoundFileNamed("Laser.mp3", waitForCompletion: false))
         let laser = SKSpriteNode(imageNamed: "LaserImage")
-        let currAngle = rocket.zRotation
+        //let currAngle = rocket.zRotation
         //laser.position = CGPoint(x: rocket.position.x + 10*sin(currAngle), y: rocket.position.y + 10*cos(currAngle))
         laser.position = CGPoint(x: rocket.position.x, y: rocket.position.y + 5)
         laser.size = CGSize(width: 5, height: 20)
@@ -176,11 +176,13 @@ class GameScene: SKScene {
         laser.physicsBody?.contactTestBitMask = PhysicsSettings.object
         laser.physicsBody?.collisionBitMask = PhysicsSettings.none
         laser.zPosition = ZPositions.laser
+        //laser.zRotation = rocket.zRotation
+        rocket.zRotation = 0
         addChild(laser)
         
         let laserDuration:TimeInterval = 0.2
         var action = [SKAction]()
-        action.append(SKAction.move(to: CGPoint(x: laser.position.x-sin(currAngle), y: frame.size.height), duration: laserDuration))
+        action.append(SKAction.move(to: CGPoint(x: laser.position.x, y: frame.maxY), duration: laserDuration))
         action.append(SKAction.removeFromParent())
         laser.run(SKAction.sequence(action))
     }
