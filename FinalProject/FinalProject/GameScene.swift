@@ -70,7 +70,7 @@ class GameScene: SKScene, UITextFieldDelegate {
             rocketAngle -= 2 * .pi
         }
         rocketPrevAngle = angle
-        rocketAngle = angle * 0.12 + rocketAngle * (1 - 0.12)
+        rocketAngle = angle * 0.1 + rocketAngle * (1 - 0.1)
         rocket.zRotation = rocketAngle - (.pi)/2
         
     }
@@ -191,21 +191,16 @@ class GameScene: SKScene, UITextFieldDelegate {
         let finalY : CGFloat!
         let finalX : CGFloat!
         let currAngle = laser.zRotation
-        print(currAngle*180/(.pi))
         if (0 <= currAngle && currAngle < .pi/2) {
-            print("1")
             finalY = frame.maxY
             finalX = laser.position.x - abs((finalY-laser.position.y)*tan(currAngle))
         } else if (-3*(.pi/2) <= currAngle && currAngle < -1*(.pi)) {
-            print("2")
             finalY = frame.minY
             finalX = laser.position.x - abs(laser.position.y*tan(currAngle))
         } else if (-1*(.pi) <= currAngle && currAngle < -1*(.pi)/2) {
-            print("3")
             finalY = frame.minY
             finalX = laser.position.x + abs(laser.position.y*tan(currAngle))
         } else {
-            print("4")
             finalY = frame.maxY
             finalX = laser.position.x + abs((finalY-laser.position.y)*tan(currAngle))
         }
