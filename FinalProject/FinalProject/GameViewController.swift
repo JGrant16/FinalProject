@@ -16,6 +16,7 @@ class GameViewController: UIViewController {
     @IBAction func leaveGame(_ sender: UIButton) {
         // Should kill the current scene, otherwise it will become laggy after a few plays.
         currScene!.isPaused = true
+        currScene = nil
     }
     
     override func viewDidLoad() {
@@ -26,7 +27,7 @@ class GameViewController: UIViewController {
             scene.scaleMode = .aspectFill
             currScene = scene
                 
-            view.presentScene(scene)
+            view.presentScene(currScene)
             
             
             view.ignoresSiblingOrder = true
