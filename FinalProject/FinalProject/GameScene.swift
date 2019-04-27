@@ -81,6 +81,18 @@ class GameScene: SKScene, UITextFieldDelegate {
             addChild(backgroundMusic)
         }
         
+        let difficulty = UserDefaults.standard.integer(forKey: "difficulty")
+        switch difficulty {
+            case 0:
+                spawnDifficulty = SpawnDifficultySettings.easy
+            case 1:
+                spawnDifficulty = SpawnDifficultySettings.medium
+            case 2:
+                spawnDifficulty = SpawnDifficultySettings.hard
+            default:
+                spawnDifficulty = SpawnDifficultySettings.easy
+        }
+        
         physicsWorld.contactDelegate = self
         
         scoreLabel = SKLabelNode(text: "Score: 0")

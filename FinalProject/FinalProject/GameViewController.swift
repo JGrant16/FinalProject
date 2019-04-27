@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
-    
+
     var currScene: GameScene?
     let defaultLeaderboard: [(String, Int)] =
     [
@@ -23,9 +23,9 @@ class GameViewController: UIViewController {
         ("Advanced", 40),
         ("Normal", 30),
         ("Novice", 20),
-        ("Beginner", 1)
+        ("Beginner", 10)
     ]
-
+    
     @IBAction func leaveGame(_ sender: UIButton) {
         
         var name: String = ""
