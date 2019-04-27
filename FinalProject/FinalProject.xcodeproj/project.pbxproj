@@ -20,6 +20,7 @@
 		31E2DAE1226ECC3800DCD60A /* Fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 31E2DAE0226ECC3800DCD60A /* Fire.sks */; };
 		31E2DAE6226ECD3D00DCD60A /* Explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 31E2DAE5226ECD3500DCD60A /* Explosion.mp3 */; };
 		6B90C5B722741203004847C2 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90C5B622741203004847C2 /* SettingsController.swift */; };
+		6BEC739F2274E2010026B49B /* HighscoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC739E2274E2010026B49B /* HighscoreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		31E2DAE0226ECC3800DCD60A /* Fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fire.sks; sourceTree = "<group>"; };
 		31E2DAE5226ECD3500DCD60A /* Explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Explosion.mp3; sourceTree = "<group>"; };
 		6B90C5B622741203004847C2 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		6BEC739E2274E2010026B49B /* HighscoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighscoreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				31345353226687D0006D45EB /* FinalProject */,
-				3134536E226687D1006D45EB /* FinalProjectTests */,
 				31345379226687D1006D45EB /* FinalProjectUITests */,
 				31345352226687D0006D45EB /* Products */,
 			);
@@ -115,6 +116,8 @@
 				3134535C226687D0006D45EB /* GameViewController.swift */,
 				6B90C5B622741203004847C2 /* SettingsController.swift */,
 				31E2DADA226EA13F00DCD60A /* Settings.swift */,
+				6BEC739E2274E2010026B49B /* HighscoreViewController.swift */,
+				3134536E226687D1006D45EB /* FinalProjectTests */,
 				3134535E226687D0006D45EB /* Main.storyboard */,
 				31345361226687D1006D45EB /* Assets.xcassets */,
 				31345363226687D1006D45EB /* LaunchScreen.storyboard */,
@@ -288,6 +291,7 @@
 				3134535B226687D0006D45EB /* GameScene.swift in Sources */,
 				6B90C5B722741203004847C2 /* SettingsController.swift in Sources */,
 				3134535D226687D0006D45EB /* GameViewController.swift in Sources */,
+				6BEC739F2274E2010026B49B /* HighscoreViewController.swift in Sources */,
 				31E2DADB226EA13F00DCD60A /* Settings.swift in Sources */,
 				31345355226687D0006D45EB /* AppDelegate.swift in Sources */,
 			);
