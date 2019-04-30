@@ -27,6 +27,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     var rocketAngle: CGFloat = 0
     var rocketPrevAngle: CGFloat = 0
     var userName : String?
+    var restartButton : UIButton?
 
     var score = 0 {
         didSet {
@@ -243,6 +244,8 @@ class GameScene: SKScene, UITextFieldDelegate {
         scoreLabel.text = "Score: \(score)"
         gameOverDetect = true
         
+        restartButton!.isHidden = false
+        
         let sceneFrame = CGRect(x: frame.midX/2, y: frame.midY/2, width: frame.midX, height: frame.midY)
         let scene = SKScene(size: sceneFrame.size)
         scene.backgroundColor = UIColor.lightGray
@@ -274,9 +277,9 @@ class GameScene: SKScene, UITextFieldDelegate {
     func laserCollision(laser: SKSpriteNode, object : SKSpriteNode) {
         if (gameOverDetect == false) {
             if (object.zPosition >= ZPositions.alien) {
-                score += 2
+                score += 3
             } else {
-                score += 1
+                score += 2
             }
             let explode = SKEmitterNode(fileNamed: "Fire")!
             explode.position = object.position

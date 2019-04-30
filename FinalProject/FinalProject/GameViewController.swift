@@ -11,7 +11,10 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
+    @IBOutlet weak var restartButton: UIButton!
+    
     var currScene: GameScene?
+
     let defaultLeaderboard: [(String, Int)] =
     [
         ("Ultraplayer", 100),
@@ -26,7 +29,15 @@ class GameViewController: UIViewController {
         ("Beginner", 10)
     ]
     
+    @IBAction func restartGame(_ sender: UIButton) {
+        saveHighscore()
+    }
+    
     @IBAction func leaveGame(_ sender: UIButton) {
+        saveHighscore()
+    }
+    
+    func saveHighscore() {
         
         var name: String = ""
         
@@ -95,6 +106,8 @@ class GameViewController: UIViewController {
             let scene = GameScene(size: view.bounds.size)
             scene.scaleMode = .aspectFill
             currScene = scene
+            self.restartButton.isHidden = true
+            scene.restartButton = self.restartButton
                 
             view.presentScene(currScene)
             
