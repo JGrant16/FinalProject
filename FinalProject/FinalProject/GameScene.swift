@@ -194,7 +194,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         run(SKAction.playSoundFileNamed("Laser.mp3", waitForCompletion: false))
         let laser = SKSpriteNode(imageNamed: "LaserImage")
         laser.position = CGPoint(x: rocket.position.x, y: rocket.position.y)
-        laser.position = CGPoint(x: rocket.position.x, y: rocket.position.y + 5)
+        
         laser.size = CGSize(width: 5, height: 20)
         laser.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: laser.size.width, height: laser.size.height))
         laser.physicsBody?.affectedByGravity = false

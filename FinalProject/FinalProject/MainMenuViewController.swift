@@ -24,6 +24,8 @@ class MainMenuViewController : UIViewController {
             } catch {
                 print("Music Loading Error")
             }
+        } else {
+            backgroundMusicPlayer?.play()
         }
     }
 }
