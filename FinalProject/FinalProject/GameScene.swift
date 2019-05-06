@@ -58,14 +58,14 @@ class GameScene: SKScene, UITextFieldDelegate {
         rocket.position.x += xAcceleration*35
         rocket.position.y += yAcceleration*35
         
-        if (rocket.position.x < -rocket.size.width/2) {
-            rocket.position = CGPoint(x: frame.width+rocket.size.width/2, y: rocket.position.y)
-        } else if (rocket.position.x > frame.width + rocket.size.width/2) {
-            rocket.position = CGPoint(x: -rocket.size.width/2, y: rocket.position.y)
-        } else if (rocket.position.y < -rocket.size.height/2) {
-            rocket.position = CGPoint(x: rocket.position.x, y: frame.height+rocket.size.height/2)
-        } else if (rocket.position.y > frame.height + rocket.size.height/2) {
-            rocket.position = CGPoint(x: rocket.position.x, y: -rocket.size.height/2)
+        if (rocket.position.x < -rocket.size.width/4) {
+            rocket.position = CGPoint(x: frame.width+rocket.size.width/4, y: rocket.position.y)
+        } else if (rocket.position.x > frame.width + rocket.size.width/4) {
+            rocket.position = CGPoint(x: -rocket.size.width/4, y: rocket.position.y)
+        } else if (rocket.position.y < -rocket.size.height/4) {
+            rocket.position = CGPoint(x: rocket.position.x, y: frame.height+rocket.size.height/4)
+        } else if (rocket.position.y > frame.height + rocket.size.height/4) {
+            rocket.position = CGPoint(x: rocket.position.x, y: -rocket.size.height/4)
         }
         let dx = rocket.position.x - previousX
         let dy = rocket.position.y - previousY
@@ -119,7 +119,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         rocket.size = CGSize(width: frame.size.width/5, height: frame.size.height/13)
         rocket.position = CGPoint(x: frame.midX, y: frame.midY)
         rocket.zPosition = ZPositions.rocket
-        rocket.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rocket.size.width-5, height: rocket.size.height))
+        rocket.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rocket.size.width-10, height: rocket.size.height-10))
         rocket.physicsBody?.categoryBitMask = PhysicsSettings.rocket
         rocket.physicsBody?.isDynamic = true
         rocket.physicsBody?.affectedByGravity = false
@@ -158,11 +158,10 @@ class GameScene: SKScene, UITextFieldDelegate {
     }
     
     func difficultyIncrease() {
-        switch score % 10 {
+        switch score % 15 {
         case 0:
-            spawnDifficulty -= 0.1
+            spawnDifficulty -= 0.05
             timer.invalidate()
-            print(spawnDifficulty)
             timer = Timer.scheduledTimer(timeInterval: spawnDifficulty, target: self, selector: #selector(spawnObject), userInfo: nil, repeats: true)
         default:
             break
@@ -269,6 +268,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         userName = textField.text
         UserDefaults.standard.set(score, forKey: userName!)
+        print(UserDefaults.standard.integer(forKey: userName!))
         textField.resignFirstResponder()
         textField.removeFromSuperview()
         let thanksNode = SKLabelNode(text: "Thanks for Playing \(userName!)!")
