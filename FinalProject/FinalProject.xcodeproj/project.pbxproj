@@ -20,8 +20,8 @@
 		31E2DAE1226ECC3800DCD60A /* Fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = 31E2DAE0226ECC3800DCD60A /* Fire.sks */; };
 		31E2DAE6226ECD3D00DCD60A /* Explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 31E2DAE5226ECD3500DCD60A /* Explosion.mp3 */; };
 		31EE6FF7227FDB1900168C75 /* dox-unknown-energy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 31EE6FF6227FDB1900168C75 /* dox-unknown-energy.mp3 */; };
-		31EE6FF9227FDB1F00168C75 /* electronic-senses-beyond-jupiter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 31EE6FF8227FDB1F00168C75 /* electronic-senses-beyond-jupiter.mp3 */; };
 		31EE6FFB227FEC5900168C75 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EE6FFA227FEC5900168C75 /* MainMenuViewController.swift */; };
+		31EE700022809D5D00168C75 /* electronic-senses-beyond-jupiter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 31EE6FFF22809D5D00168C75 /* electronic-senses-beyond-jupiter.mp3 */; };
 		6B90C5B722741203004847C2 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B90C5B622741203004847C2 /* SettingsController.swift */; };
 		6BEC739F2274E2010026B49B /* HighscoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEC739E2274E2010026B49B /* HighscoreViewController.swift */; };
 /* End PBXBuildFile section */
@@ -62,9 +62,9 @@
 		31E2DADE226EC5E300DCD60A /* Laser.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Laser.mp3; sourceTree = "<group>"; };
 		31E2DAE0226ECC3800DCD60A /* Fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fire.sks; sourceTree = "<group>"; };
 		31E2DAE5226ECD3500DCD60A /* Explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Explosion.mp3; sourceTree = "<group>"; };
-		31EE6FF6227FDB1900168C75 /* dox-unknown-energy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "dox-unknown-energy.mp3"; path = "../../../../Downloads/dox-unknown-energy.mp3"; sourceTree = "<group>"; };
-		31EE6FF8227FDB1F00168C75 /* electronic-senses-beyond-jupiter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "electronic-senses-beyond-jupiter.mp3"; path = "../../../../Downloads/electronic-senses-beyond-jupiter.mp3"; sourceTree = "<group>"; };
+		31EE6FF6227FDB1900168C75 /* dox-unknown-energy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "dox-unknown-energy.mp3"; sourceTree = "<group>"; };
 		31EE6FFA227FEC5900168C75 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
+		31EE6FFF22809D5D00168C75 /* electronic-senses-beyond-jupiter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "electronic-senses-beyond-jupiter.mp3"; sourceTree = "<group>"; };
 		6B90C5B622741203004847C2 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		6BEC739E2274E2010026B49B /* HighscoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighscoreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,7 +156,7 @@
 			children = (
 				31E2DAE0226ECC3800DCD60A /* Fire.sks */,
 				31E2DADE226EC5E300DCD60A /* Laser.mp3 */,
-				31EE6FF8227FDB1F00168C75 /* electronic-senses-beyond-jupiter.mp3 */,
+				31EE6FFF22809D5D00168C75 /* electronic-senses-beyond-jupiter.mp3 */,
 				31EE6FF6227FDB1900168C75 /* dox-unknown-energy.mp3 */,
 				31E2DAE5226ECD3500DCD60A /* Explosion.mp3 */,
 			);
@@ -273,7 +273,7 @@
 				31EE6FF7227FDB1900168C75 /* dox-unknown-energy.mp3 in Resources */,
 				31E2DAE1226ECC3800DCD60A /* Fire.sks in Resources */,
 				31E2DAE6226ECD3D00DCD60A /* Explosion.mp3 in Resources */,
-				31EE6FF9227FDB1F00168C75 /* electronic-senses-beyond-jupiter.mp3 in Resources */,
+				31EE700022809D5D00168C75 /* electronic-senses-beyond-jupiter.mp3 in Resources */,
 				31345365226687D1006D45EB /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
