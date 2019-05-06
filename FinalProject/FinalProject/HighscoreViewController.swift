@@ -9,7 +9,7 @@
 import UIKit
 
 class HighscoreViewController: UIViewController {
-    
+
     let defaultLeaderboard: [(String, Int)] =
         [
             ("Ultraplayer", 100),

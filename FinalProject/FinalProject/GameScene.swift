@@ -14,6 +14,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     var rocket : SKSpriteNode!
     var backGround : SKSpriteNode!
     var objectImages : [String] = ["436AsteroidBlue", "436AsteroidWhite", "436Asteroid", "436EnemyUFO", "436EnemyAlien", "436EnemyAlienBlue"]
+    var rocketImages : [String] = ["436SpaceShipBlue", "436SpaceShipDark", "436SpaceShipGreen", "436SpaceShipPurple"]
     var gameOver : SKLabelNode!
     var timer : Timer!
     var scoreLabel : SKLabelNode!
@@ -28,6 +29,7 @@ class GameScene: SKScene, UITextFieldDelegate {
     var rocketPrevAngle: CGFloat = 0
     var userName : String?
     var restartButton : UIButton?
+    final var initialOrientation : CGFloat?
 
     var score = 0 {
         didSet {
@@ -37,12 +39,15 @@ class GameScene: SKScene, UITextFieldDelegate {
     
     override func didMove(to view: SKView) {
         setScene()
+        backgroundMusicPlayer!.pause()
         motion.accelerometerUpdateInterval = 0.1
         motion.startAccelerometerUpdates(to: OperationQueue.current!) {(data: CMAccelerometerData?, error: Error?) in
+            if self.initialOrientation == nil {
+                self.initialOrientation = CGFloat((data?.acceleration.y)!)
+            }
             if let accelData = data {
-                self.xAcceleration = CGFloat(accelData.acceleration.x)*0.7
-                self.yAcceleration = CGFloat(accelData.acceleration.y)*0.6 + 0.3
-                
+                self.xAcceleration = CGFloat(accelData.acceleration.x)*0.55
+                self.yAcceleration = (CGFloat(accelData.acceleration.y) - self.initialOrientation!)*0.53
             }
         }
     }
@@ -71,13 +76,13 @@ class GameScene: SKScene, UITextFieldDelegate {
             rocketAngle -= 2 * .pi
         }
         rocketPrevAngle = angle
-        rocketAngle = angle * 0.1 + rocketAngle * (1 - 0.1)
+        rocketAngle = angle * 0.08 + rocketAngle * (1 - 0.08)
         rocket.zRotation = rocketAngle - (.pi)/2
         
     }
     
     func setScene() {
-        if let musicURL = Bundle.main.url(forResource: "Light-Years_v001", withExtension: "mp3") {
+        if let musicURL = Bundle.main.url(forResource: "electronic-senses-beyond-jupiter", withExtension: "mp3") {
             backgroundMusic = SKAudioNode(url: musicURL)
             addChild(backgroundMusic)
         }
@@ -110,8 +115,8 @@ class GameScene: SKScene, UITextFieldDelegate {
         backGround.zPosition = ZPositions.backGround
         addChild(backGround)
         
-        rocket = SKSpriteNode(imageNamed: "Spaceship-PNG-File")
-        rocket.size = CGSize(width: frame.size.width/8, height: frame.size.height/8)
+        rocket = SKSpriteNode(imageNamed: rocketImages[UserDefaults.standard.integer(forKey: "shipColor")])
+        rocket.size = CGSize(width: frame.size.width/5, height: frame.size.height/13)
         rocket.position = CGPoint(x: frame.midX, y: frame.midY)
         rocket.zPosition = ZPositions.rocket
         rocket.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rocket.size.width-5, height: rocket.size.height))
@@ -128,7 +133,7 @@ class GameScene: SKScene, UITextFieldDelegate {
         let randSpawn = Int(arc4random_uniform(UInt32(objectImages.count)))
         let object = SKSpriteNode(imageNamed: objectImages[randSpawn])
         
-        object.size = CGSize(width: 70, height: 40)
+        object.size = CGSize(width: 75, height: 45)
         let xPositionSpawn = CGFloat(arc4random_uniform(UInt32(frame.size.width-object.size.width))) + object.size.width/2
         object.position = CGPoint(x: xPositionSpawn, y: frame.maxY-object.size.height/2)
         object.physicsBody = SKPhysicsBody(circleOfRadius: object.size.width/2)
@@ -233,6 +238,8 @@ class GameScene: SKScene, UITextFieldDelegate {
     
     func gameOverMethod() {
         timer.invalidate()
+        backgroundMusicPlayer!.play()
+        removeChildren(in: [backgroundMusic])
         gameOver = SKLabelNode(text: "Game Over! Final Score: \(score)")
         gameOver.fontSize = 25
         gameOver.fontName = "ChalkboardSE-Bold"

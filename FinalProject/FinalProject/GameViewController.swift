@@ -101,10 +101,15 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         if let view = self.view as! SKView? {
             let scene = GameScene(size: view.bounds.size)
             scene.scaleMode = .aspectFill
+            let backGround = SKSpriteNode(imageNamed: "Harris-Space-wallpaper")
+            backGround.size = CGSize(width: view.frame.size.width, height: view.frame.size.height+100)
+            backGround.position = CGPoint(x: view.frame.size.width, y: view.frame.midY)
+            backGround.zPosition = ZPositions.backGround
+            scene.backGround = backGround
             currScene = scene
             self.restartButton.isHidden = true
             scene.restartButton = self.restartButton
@@ -114,8 +119,6 @@ class GameViewController: UIViewController {
             
             view.ignoresSiblingOrder = true
             
-            view.showsFPS = true
-            view.showsNodeCount = true
         }
     }
 }
