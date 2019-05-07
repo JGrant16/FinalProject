@@ -57,9 +57,9 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title" translatesAutoresizingMaskIntoConstraints="NO" id="Fln-yF-fWy">
-                                <rect key="frame" x="0.0" y="80" width="375" height="194"/>
+                                <rect key="frame" x="0.0" y="80" width="375" height="300"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Fln-yF-fWy" secondAttribute="height" multiplier="375:194" id="CVR-ML-V8p"/>
+                                    <constraint firstAttribute="width" secondItem="Fln-yF-fWy" secondAttribute="height" multiplier="375:300" id="CVR-ML-V8p"/>
                                 </constraints>
                             </imageView>
                         </subviews>
