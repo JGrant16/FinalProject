@@ -435,7 +435,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUy-p2-cYQ">
-                                <rect key="frame" x="32.5" y="558" width="260" height="48.5"/>
+                                <rect key="frame" x="37.5" y="551" width="300" height="55.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="zUy-p2-cYQ" secondAttribute="height" multiplier="27:5" id="Zev-PU-OVj"/>
                                 </constraints>
@@ -447,7 +447,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Difficulty" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gkr-CR-PSH">
-                                <rect key="frame" x="21.5" y="89" width="87.5" height="28.5"/>
+                                <rect key="frame" x="31.5" y="89" width="87.5" height="28.5"/>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="20"/>
                                 <color key="textColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -456,7 +456,7 @@
                                 </variation>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BGE-gW-2IJ">
-                                <rect key="frame" x="158.5" y="91.5" width="150" height="24"/>
+                                <rect key="frame" x="182" y="90" width="170" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="BGE-gW-2IJ" secondAttribute="height" multiplier="183:28" id="zsN-bC-5rE"/>
                                 </constraints>
@@ -471,7 +471,7 @@
                                 </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ship Color" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SeZ-zn-qSx">
-                                <rect key="frame" x="17" y="243" width="96" height="28.5"/>
+                                <rect key="frame" x="27" y="243" width="96" height="28.5"/>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="20"/>
                                 <color key="textColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -480,20 +480,20 @@
                                 </variation>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FEB-sL-mYD">
-                                <rect key="frame" x="158.5" y="212.5" width="150" height="108"/>
+                                <rect key="frame" x="182" y="214" width="170" height="108"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cDb-1v-hPq">
-                                        <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="170" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hae-WU-19a">
-                                                <rect key="frame" x="0.0" y="0.0" width="71" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="81" height="50"/>
                                                 <state key="normal" title="Button" image="436SpaceShipBlue"/>
                                                 <connections>
                                                     <action selector="selectBlueShip:" destination="eSU-Eo-qD9" eventType="touchUpInside" id="A3a-21-doy"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kXp-lJ-aO3">
-                                                <rect key="frame" x="79" y="0.0" width="71" height="50"/>
+                                                <rect key="frame" x="89" y="0.0" width="81" height="50"/>
                                                 <state key="normal" title="Button" image="436SpaceShipDark"/>
                                                 <connections>
                                                     <action selector="selectBlackShip:" destination="eSU-Eo-qD9" eventType="touchUpInside" id="pGN-Vr-AfR"/>
@@ -506,17 +506,17 @@
                                         </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vpH-j4-Pqo">
-                                        <rect key="frame" x="0.0" y="58" width="150" height="50"/>
+                                        <rect key="frame" x="0.0" y="58" width="170" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIh-k3-Wmh">
-                                                <rect key="frame" x="0.0" y="0.0" width="71" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="81" height="50"/>
                                                 <state key="normal" title="Button" image="436SpaceShipGreen"/>
                                                 <connections>
                                                     <action selector="selectGreenShip:" destination="eSU-Eo-qD9" eventType="touchUpInside" id="953-w0-Db5"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="81I-o7-Ncq">
-                                                <rect key="frame" x="79" y="0.0" width="71" height="50"/>
+                                                <rect key="frame" x="89" y="0.0" width="81" height="50"/>
                                                 <state key="normal" title="Button" image="436SpaceShipPurple"/>
                                                 <connections>
                                                     <action selector="selectPurpleShip:" destination="eSU-Eo-qD9" eventType="touchUpInside" id="hk7-Wy-Kwq"/>
@@ -531,7 +531,7 @@
                                 </subviews>
                             </stackView>
                             <imageView userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Harris-Space-wallpaper" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ECF-gG-19B">
-                                <rect key="frame" x="0.0" y="0.0" width="325" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="0.1388205901" green="0.1388205901" blue="0.1388205901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                         </subviews>
@@ -585,6 +585,6 @@
         <image name="title" width="800" height="400"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ooe-JR-BP7"/>
+        <segue reference="mQw-yG-gIv"/>
     </inferredMetricsTieBreakers>
 </document>

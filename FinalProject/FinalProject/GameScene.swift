@@ -268,11 +268,10 @@ class GameScene: SKScene, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         userName = textField.text
         UserDefaults.standard.set(score, forKey: userName!)
-        print(UserDefaults.standard.integer(forKey: userName!))
         textField.resignFirstResponder()
         textField.removeFromSuperview()
         let thanksNode = SKLabelNode(text: "Thanks for Playing \(userName!)!")
-        thanksNode.fontSize = 25
+        thanksNode.fontSize = 20
         thanksNode.fontColor = UIColor.yellow
         thanksNode.fontName = "ChalkboardSE-Bold"
         thanksNode.position = CGPoint(x: frame.midX, y: frame.midY-40)

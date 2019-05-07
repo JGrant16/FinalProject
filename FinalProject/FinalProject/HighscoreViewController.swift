@@ -29,7 +29,6 @@ class HighscoreViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         if let nameList = UserDefaults.standard.array(forKey: "name"), let scoreList = UserDefaults.standard.array(forKey: "score") {
             for i in 0..<10 {
                 names[i].text = nameList[i] as? String

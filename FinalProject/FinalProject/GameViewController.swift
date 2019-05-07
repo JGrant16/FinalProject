@@ -55,13 +55,10 @@ class GameViewController: UIViewController {
                 var uploadedNames : [String] = []
                 var uploadedScores : [Int] = []
                 
-                for subView in view.subviews {
-                    if subView is UITextField {
-                        name = (subView as! UITextField).text ?? "Player"
-                        if name == "" {
-                            name = "Player"
-                        }
-                    }
+                if let newName = currScene?.userName {
+                    name = newName
+                } else {
+                    name = "Player"
                 }
                 
                 let newScore = (name, score)
@@ -78,7 +75,6 @@ class GameViewController: UIViewController {
                     }
                 }
                 
-                print(leaderboard)
                 for i in 0..<10 {
                     uploadedNames.append(leaderboard[i].0)
                     uploadedScores.append(leaderboard[i].1)
